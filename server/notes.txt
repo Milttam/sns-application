@@ -1,0 +1,7 @@
+Data model: 
+- We want to have separate Users with the corresponding info
+- Posts: we want a collection of all posts with info (user, date, likes, comments)
+
+Notes: 
+Authentication: when user registers and login
+Authorization: how to make sure someone is logged in and access api endpoints
