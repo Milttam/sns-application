@@ -13,6 +13,9 @@ import userRoutes from './routes/users.js';
 import {verifyToken} from './middleware/auth.js';
 import { register } from './controllers/auth.js';
 import {createPost} from './controllers/posts.js';
+import User from './models/user.js';
+import Post from './models/post.js';
+import { users, posts} from './data/index.js';
 
 /** Configurations */
 //middleware: runs in between requests 
@@ -44,7 +47,7 @@ const upload = multer({storage: storage});
 
 /** Routes with Files */
 //not in the route folder because we need upload file
-//app.post("/auth/register", upload.single("picture"), register);
+app.post("/auth/register", upload.single("picture"), register);
 app.post('/posts', verifyToken, upload.single("picture"), createPost);
 
 /** Routes */
@@ -58,6 +61,11 @@ mongoose.connect(process.env.MONGO_URL, {
     useUnifiedTopology: true
 }).then(() => {
     app.listen(PORT, () => console.log(`Server running on port: ${PORT}`))
+
+    //manually injdect the DB with data. 
+    //Only want to add this data ONE TIME
+    User.insertMany(users);
+    Post.insertMany(posts);
 }).catch((error) => {
     console.log(error.message);
 });
