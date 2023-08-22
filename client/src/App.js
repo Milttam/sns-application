@@ -3,16 +3,28 @@ import HomePage from 'scenes/homePage';
 import LoginPage from 'scenes/loginPage';
 import ProfilePage from 'scenes/profilePage';
 import NavBar from 'scenes/navbar';
+import { useMemo } from 'react';
+import {useSelector} from 'react-redux';
+import {CssBaseline, ThemeProvider} from '@mui/material';
+import {createTheme} from '@mui/material/styles';
+import {themeSettings} from './theme';
 
 function App() {
+  const mode = useSelector((state) => state.mode);
+  const theme = useMemo(()=> createTheme(themeSettings(mode)), [mode])
+  //above line sets up the theme 
+
   return (
     <div className="App">
       <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<LoginPage />} />
-          <Route path="/home" element={<HomePage />} />
-          <Route path="/profile/:userID" element={<ProfilePage />} />
-        </Routes>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <Routes>
+            <Route path="/" element={<LoginPage />} />
+            <Route path="/home" element={<HomePage />} />
+            <Route path="/profile/:userID" element={<ProfilePage />} />
+          </Routes>
+        </ThemeProvider>
       </BrowserRouter>
     </div>
   );

@@ -3,5 +3,4 @@
         "baseUrl": "src"
     },
     "include": ["src"]
-    // when we import from other files it automattically has src in the path
 }

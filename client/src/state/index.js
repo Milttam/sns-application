@@ -1,13 +1,13 @@
 import {createSlice} from '@reduxjs/toolkit';
 
-const initalState = {
+const initialState = {
     mode: "light", //darkmode/lightmode
     user: null, 
     token: null, //auth info
     posts: [], //posts
 };
 
-export const authAlice = createSlice({
+export const authSlice = createSlice({
     name: "auth",
     initialState,
     reducers: {
@@ -39,13 +39,14 @@ export const authAlice = createSlice({
             //basically looping through all the posts to find the post we want
             const updatedPosts = state.posts.map((post) => {
                 if (post._id=== action.payload.post._id) {
-                    return post;
+                    return action.payload.post;
                 }
+                return post;
             });
             state.posts = updatedPosts;
         }
     }
 });
 
-export const {setMode, setLogin, setLogout, setFriends, setPosts, setPost} = authAlice.actions;
-export default authAlice.reducer;
+export const {setMode, setLogin, setLogout, setFriends, setPosts, setPost} = authSlice.actions;
+export default authSlice.reducer;
