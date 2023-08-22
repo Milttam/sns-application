@@ -138,7 +138,8 @@ const NavBar = () => {
                     <Notifications sx={{fontSize:"25px"}}/>
                     <Help sx={{fontSize:"25px"}}/>
                     <FormControl variant = "standard" value = {fullName}>
-                        <Select value = {fullName} sx={{
+                        <Select value = {fullName} 
+                        sx={{
                             backgroundColor: neutralLight,
                             fontSize:"25px",
                             width: "150px",
@@ -151,14 +152,14 @@ const NavBar = () => {
                             "& .MuiSelect-select:focus": {
                                 backgroundColor: neutralLight
                             }
-                            }}
-                            input = {<InputBase/>}
+                        }}
+                        input = {<InputBase/>}
                         >
                             <MenuItem value = {fullName}>
                                 <Typography>{fullName}</Typography>
                             </MenuItem>
                             <MenuItem onClick = {()=> dispatch(setLogout())}>
-                                LogOut
+                                Log Out
                             </MenuItem>
                         </Select>
                     </FormControl>
