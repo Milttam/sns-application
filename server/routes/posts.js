@@ -2,7 +2,7 @@ import express from 'express';
 import {getFeedPosts, getUserPosts, likePost} from '../controllers/posts.js';
 import { verifyToken } from '../middleware/auth.js';
 
-const routes = express.Router();
+const router = express.Router();
 
 /** READ Routes */
 router.get("/", verifyToken, getFeedPosts);

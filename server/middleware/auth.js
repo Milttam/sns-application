@@ -15,7 +15,7 @@ export const verifyToken = async (req, res, next) => {
 
         //verify token with the secret string
         const verified = jwt.verify(token, process.env.JWT_SECRET);
-        req.user = verified
+        req.user = verified;
         next();
     } catch (e) {
         res.status(500).json({message: e.message});

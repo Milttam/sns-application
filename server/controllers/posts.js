@@ -6,16 +6,17 @@ export const createPost = async (req, res) => {
     try {
         //all what the front end will send us
         const {userId, description, picturePath} = req.body;
-        
         const user = await User.findById(userId);
         const newPost = new Post({
             userId: user._id,
             firstName: user.firstName,
             lastName: user.lastName,
+            location: user.location,
             description: description,
+            userPicturePath: user.picturePath,
             picturePath: picturePath,
             likes: {},
-            comments: {}
+            comments: []
         });
         //save post to MongoDB
         await newPost.save();
@@ -30,7 +31,7 @@ export const createPost = async (req, res) => {
 };
 
 /** READ */
-export const getPosts = async (req, res) => {
+export const getFeedPosts = async (req, res) => {
     //usually much more complicated with AI algos
     try {
         const posts = await Post.find();

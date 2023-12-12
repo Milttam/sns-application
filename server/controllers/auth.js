@@ -60,12 +60,10 @@ export const login = async (req, res) => {
 
         //create token with info and secret
         const token = jwt.sign(
-            {email: user.email, id: user._id}, 
-            process.env.JWT_SECRET, 
-            {expiresIn: "1h"}
-        );
+            {id: user._id}, 
+            process.env.JWT_SECRET);
         //delete password from user object
-        user.password = undefined;
+        delete user.password;
 
         //send back user and token
         res.status(200).json({result: user, token});
