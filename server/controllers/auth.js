@@ -66,7 +66,7 @@ export const login = async (req, res) => {
         delete user.password;
 
         //send back user and token
-        res.status(200).json({result: user, token});
+        res.status(200).json({token, user});
     } catch (e) {
         res.status(500).json({message: e.message});
     }
