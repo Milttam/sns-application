@@ -55,10 +55,10 @@ export const getUserPosts = async (req, res) => {
 export const likePost = async (req, res) => {
     try {
         //grab the post id from params 
-        const {id} = req.params
+        const {postId} = req.params
         //user id will be in the request body. the front end will send it this way
         const {userId} = req.body
-        const post = await Post.findById(id)
+        const post = await Post.findById(postId)
         const isLiked = post.likes.get(userId) //checks if the userId exists aka post has been liked by userID
 
         //performs reverse operation depending on if person already liked post
@@ -69,7 +69,7 @@ export const likePost = async (req, res) => {
         }
 
         const updatedPost = await Post.findByIdAndUpdate(
-            id, 
+            postId, 
             {likes: post.likes}, //updates likes attribute
             {new: true} //makes new instance of updatedPost 
         )
