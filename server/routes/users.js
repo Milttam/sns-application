@@ -13,6 +13,7 @@ router.get("/:id", verifyToken, getUser);
 router.get("/:id/friends", verifyToken, getUserFriends);
 
 /**UPDATE Routes */
+// for current user with id, update friend list with friendId
 router.patch("/:id/friendId", verifyToken, addRemoveFreind);
 
 export default router;
