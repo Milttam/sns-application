@@ -3,21 +3,20 @@ import {useDispatch, useSelector} from "react-redux"
 import {setPosts} from "state"
 import PostWidget from "./PostWidget";
 
-const AllPostsWidget = ({userId, isProfile}) => {
+const AllPostsWidget = ({userId, isProfile = false}) => {
   const dispatch = useDispatch();
   const posts = useSelector((state) => state.posts);
-  const token = useSelector((state) => state.user.token);
+  const token = useSelector((state) => state.token);
 
   // Using dispatch below will only update the posts in the store, so posts 
   // will refer to the same object in memory.
 
   // posts of friends of logged on user
   const getPosts = async () => {
-    const res = await fetch(`https://localhost/3001/posts/`,{
+    const res = await fetch(`http://localhost:3001/posts`,{
       method: "GET",
       headers: {
-        Authorization: `Bearer: ${token}`,
-        "Content-Type": "application/json",}
+        Authorization: `Bearer: ${token}`}
       }) // no body
     const data = await res.json()
     dispatch(setPosts({posts: data}))
@@ -25,11 +24,10 @@ const AllPostsWidget = ({userId, isProfile}) => {
 
   // posts of user
   const getUserPosts = async () => {
-    const res = await fetch(`https://localhost/3001/${userId}/posts/`,{
+    const res = await fetch(`http://localhost:3001/${userId}/posts`,{
       method: "GET",
       headers: {
-        Authorization: `Bearer: ${token}`,
-        "Content-Type": "application/json",}
+        Authorization: `Bearer: ${token}`}
       }) // no body
     const data = await res.json()
     dispatch(setPosts({posts: data}))
@@ -42,16 +40,17 @@ const AllPostsWidget = ({userId, isProfile}) => {
     } else {
       getPosts();
     }
-  }) // no dependencies
-
+}, []) // need empty array to prevent infinite loop
+  console.log(posts.message)
   return (
     <>
       {
-        posts.map(
-          (posta) => (
-            <PostWidget post = {posta}/>
-          )
-        )
+        // posts.map(
+        //   (posta) => (
+        //     <PostWidget post = {posta}/>
+        //   )
+        // )
+        // <PostWidget post = {posts[0]}/>
       }
     </>
   )

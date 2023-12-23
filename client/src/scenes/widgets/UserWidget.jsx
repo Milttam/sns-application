@@ -16,7 +16,7 @@ const UserWidget = ({ userId, picturePath }) => {
   const [user, setUser] = useState(null);
   const { palette } = useTheme();
   const navigate = useNavigate();
-  const token = useSelector((state) => state.user.token);
+  const token = useSelector((state) => state.token);
   const dark = palette.neutral.dark;
   const medium = palette.neutral.medium;
   const main = palette.primary.main;
@@ -24,19 +24,18 @@ const UserWidget = ({ userId, picturePath }) => {
 
   const getUser = async () => {
     // Getting the user data from the backend
-    const res = await fetch(
-      "http://localhost:3001/users/" + userId,{
-        method: "GET",
-        headers: {Authorization: "Bearer " + token}
-      }
-    );
-    const data = await res.json();
+    const response = await fetch(`http://localhost:3001/users/${userId}`, {
+      method: "GET",
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    const data = await response.json();
     setUser(data);
   };
 
   useEffect (() => {
     getUser();
-  })
+  }, [])
+  // need empty dependency to not let it run infinitely
 
   // if user doesn't exist, return null for component
   if (!user) return null;
@@ -56,11 +55,11 @@ const UserWidget = ({ userId, picturePath }) => {
       {/* First row: name and friends */}
       <FlexBetween
         gap = "0.5rem"
-        pb="1 rem"
+        p="3 rem"
         onClick={() => navigate(`/profile/${userId}`)}
       >
         <FlexBetween gap = "1rem">
-          <UserImage picturePath = {picturePath} />
+          <UserImage image = {picturePath} />
           <Box>
             <Typography
               variant = "h4"
@@ -83,7 +82,7 @@ const UserWidget = ({ userId, picturePath }) => {
         <ManageAccountsOutlined />
       </FlexBetween>
 
-      <Divider />
+      <Divider sx={{ mt: "1rem" }}/>
 
       {/* Second row: location and occupation */}
       <Box p="1rem 0">
